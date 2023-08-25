@@ -1,0 +1,9 @@
+[
+    {
+        "model": "techniques.position",
+        "pk": 1,
+        "fields": {
+            "name": "Closed Guard [Default] (Top)"
+        }
+    }
+]
