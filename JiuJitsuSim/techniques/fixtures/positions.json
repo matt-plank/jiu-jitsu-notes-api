@@ -3,7 +3,20 @@
         "model": "techniques.position",
         "pk": 1,
         "fields": {
-            "name": "Closed Guard [Default] (Top)"
+            "name": "Closed Guard",
+            "your_grips": [1],
+            "their_grips": [],
+            "aspect": "Playing Guard"
+        }
+    },
+    {
+        "model": "techniques.position",
+        "pk": 2,
+        "fields": {
+            "name": "Closed Guard",
+            "your_grips": [2],
+            "their_grips": [],
+            "aspect": "Playing Guard"
         }
     }
 ]

@@ -1,0 +1,16 @@
+[
+    {
+        "model": "techniques.grip",
+        "pk": 1,
+        "fields": {
+            "name": "Pinch Headlock"
+        }
+    },
+    {
+        "model": "techniques.grip",
+        "pk": 2,
+        "fields": {
+            "name": "Shoulder Crunch"
+        }
+    }
+]
