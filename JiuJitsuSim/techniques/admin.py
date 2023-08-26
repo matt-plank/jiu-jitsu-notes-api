@@ -16,5 +16,11 @@ class PositionAdmin(admin.ModelAdmin):
         return grip_names_list(obj.their_grips.all())
 
 
-admin.site.register(Technique)
+@admin.register(Technique)
+class TechniqueAdmin(admin.ModelAdmin):
+    list_display = ("name", "from_position", "to_position")
+    ordering = ("from_position",)
+    search_fields = ("name",)
+
+
 admin.site.register(Grip)
