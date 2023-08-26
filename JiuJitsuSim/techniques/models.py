@@ -9,6 +9,9 @@ def grip_names_list(grips) -> str:
 
 
 def grips_versus(first_grips: str, last_grips: str) -> str:
+    if first_grips == "" and last_grips == "":
+        return ""
+
     if first_grips == "":
         return f"({last_grips})"
 
