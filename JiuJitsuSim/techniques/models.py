@@ -49,7 +49,7 @@ class Position(models.Model):
         your_grips: str = grip_names_list(self.your_grips)
         their_grips: str = grip_names_list(self.their_grips)
 
-        return f"[{self.aspect}] {self.name} {grips_versus(your_grips, their_grips)}"
+        return f"{self.aspect} {self.name} {grips_versus(your_grips, their_grips)}"
 
 
 class Technique(models.Model):
