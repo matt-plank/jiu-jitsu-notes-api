@@ -67,5 +67,7 @@ class Technique(models.Model):
         related_name="to_position",
     )
 
+    notes = models.TextField(blank=True)
+
     def __str__(self):
         return f"{self.name} from {self.from_position}"
