@@ -32,10 +32,11 @@ class Grip(models.Model):
 
 
 class PositionDetail(models.TextChoices):
-    TOP_PIN = "Top Pin"
-    BOTTOM_PIN = "Bottom Pin"
-    ATTACKING_GUARD = "Attacking Guard"
-    PLAYING_GUARD = "Playing Guard"
+    TOP_PIN = "Top"
+    BOTTOM_PIN = "Bottom"
+    ATTACKING_GUARD = "Passing"
+    PLAYING_GUARD = "Playing"
+    SUBMISSION = "Submission"
 
 
 class Position(models.Model):
@@ -48,7 +49,7 @@ class Position(models.Model):
         your_grips: str = grip_names_list(self.your_grips)
         their_grips: str = grip_names_list(self.their_grips)
 
-        return f"{self.name} [{self.aspect}] {grips_versus(your_grips, their_grips)}"
+        return f"[{self.aspect}] {self.name} {grips_versus(your_grips, their_grips)}"
 
 
 class Technique(models.Model):
