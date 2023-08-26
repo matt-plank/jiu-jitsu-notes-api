@@ -68,4 +68,4 @@ class Technique(models.Model):
     )
 
     def __str__(self):
-        return f"{self.from_position.name} => {self.name} => {self.to_position.name}"
+        return f"{self.name} from {self.from_position}"
