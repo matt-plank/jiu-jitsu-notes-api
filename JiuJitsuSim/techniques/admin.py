@@ -18,9 +18,18 @@ class PositionAdmin(admin.ModelAdmin):
 
 @admin.register(Technique)
 class TechniqueAdmin(admin.ModelAdmin):
-    list_display = ("name", "from_position", "to_position")
+    list_display = ("name", "to_position", "from_position")
     ordering = ("from_position",)
-    search_fields = ("name",)
+    search_fields = (
+        "name",
+        "from_position__name",
+        "from_position__your_grips__name",
+        "from_position__their_grips__name",
+    )
+    list_filter = ("from_position",)
+
+    def from_position_string(self, obj) -> str:
+        return str(obj.from_position)
 
 
 admin.site.register(Grip)
