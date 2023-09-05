@@ -81,3 +81,23 @@ class Technique(models.Model):
 
     def __str__(self):
         return f"{self.name} from {self.from_position}"
+
+
+class SubmissionTechnique(models.Model):
+    """Represents a "submission" jiu-jitsu concept.
+
+    Behaves as an edge on the directed graph, between a position and a conceptual "submission"
+    position, which is not implemented but implied."""
+
+    name = models.CharField(max_length=128)
+
+    from_position = models.ForeignKey(
+        Position,
+        on_delete=models.CASCADE,
+        related_name="submission_from_position",
+    )
+
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.name} from {self.from_position}"

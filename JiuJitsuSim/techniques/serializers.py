@@ -25,3 +25,11 @@ class TechniqueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Technique
         fields = ["name", "from_position", "to_position"]
+
+
+class SubmissionTechniqueSerializer(serializers.ModelSerializer):
+    from_position = PositionSerializer()
+
+    class Meta:
+        model = models.SubmissionTechnique
+        fields = ["name", "from_position"]
