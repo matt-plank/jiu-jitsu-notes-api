@@ -5,9 +5,12 @@ from .models import Grip, Position, SubmissionTechnique, Technique, grip_names_l
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
-    list_display = ("name", "aspect", "your_grips_show", "their_grips_show")
+    list_display = ("display_name", "your_grips_show", "their_grips_show")
     ordering = ("name", "aspect")
     search_fields = ("name", "aspect")
+
+    def display_name(self, obj) -> str:
+        return f"{obj.aspect} {obj.name}"
 
     def your_grips_show(self, obj) -> str:
         return grip_names_list(obj.your_grips.all())
