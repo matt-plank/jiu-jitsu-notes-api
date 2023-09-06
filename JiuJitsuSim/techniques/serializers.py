@@ -18,6 +18,29 @@ class PositionSerializer(serializers.ModelSerializer):
         return [grip.name for grip in obj.their_grips.all()]
 
 
+class PositionTechniquesSerializer(serializers.ModelSerializer):
+    your_grips = serializers.SerializerMethodField()
+    their_grips = serializers.SerializerMethodField()
+    techniques = serializers.SerializerMethodField()
+    submissions = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Position
+        fields = ["name", "your_grips", "their_grips", "aspect", "techniques", "submissions"]
+
+    def get_your_grips(self, obj):
+        return [grip.name for grip in obj.your_grips.all()]
+
+    def get_their_grips(self, obj):
+        return [grip.name for grip in obj.their_grips.all()]
+
+    def get_techniques(self, obj) -> list[str]:
+        return [technique.name for technique in obj.techniques_from.all()]
+
+    def get_submissions(self, obj) -> list[str]:
+        return [submission.name for submission in obj.submissions_from.all()]
+
+
 class TechniqueSerializer(serializers.ModelSerializer):
     from_position = PositionSerializer()
     to_position = PositionSerializer()

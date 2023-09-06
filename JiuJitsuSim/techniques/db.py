@@ -1,6 +1,6 @@
 import random
 
-from .models import SubmissionTechnique, Technique
+from .models import Position, SubmissionTechnique, Technique
 
 
 def random_technique() -> Technique:
@@ -19,3 +19,9 @@ def random_submission() -> SubmissionTechnique:
     random_submission: SubmissionTechnique = SubmissionTechnique.objects.all()[random_index]
 
     return random_submission
+
+
+def all_positions():
+    """Retrieve all positions from the database."""
+    positions = Position.objects.all()
+    return positions

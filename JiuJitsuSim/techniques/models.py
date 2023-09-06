@@ -68,13 +68,13 @@ class Technique(models.Model):
     from_position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
-        related_name="from_position",
+        related_name="techniques_from",
     )
 
     to_position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
-        related_name="to_position",
+        related_name="techniques_to",
     )
 
     notes = models.TextField(blank=True)
@@ -94,7 +94,7 @@ class SubmissionTechnique(models.Model):
     from_position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
-        related_name="submission_from_position",
+        related_name="submissions_from",
     )
 
     notes = models.TextField(blank=True)

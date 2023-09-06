@@ -23,3 +23,13 @@ class RandomSubmissionView(APIView):
         result = serializers.SubmissionTechniqueSerializer(random_submission).data
 
         return Response(result)
+
+
+class PositionsView(APIView):
+    """Returns a list of all positions - and the techniques originating from each position."""
+
+    def get(self, request):
+        positions = db.all_positions()
+        result = serializers.PositionTechniquesSerializer(positions, many=True).data
+
+        return Response(result)
