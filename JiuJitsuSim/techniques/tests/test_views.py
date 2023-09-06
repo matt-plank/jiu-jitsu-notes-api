@@ -2,7 +2,12 @@ from django.test import TestCase
 
 
 class TestRandomTechnique(TestCase):
-    fixtures = ["grips.json", "positions.json", "techniques.json"]
+    fixtures = [
+        "grips.json",
+        "positions.json",
+        "techniques.json",
+        "submission_techniques.json",
+    ]
 
     def test_get(self):
         response = self.client.get("/api/technique/random/")
@@ -29,7 +34,12 @@ class TestRandomTechnique(TestCase):
 
 
 class TestPositions(TestCase):
-    fixtures = ["grips.json", "positions.json", "techniques.json"]
+    fixtures = [
+        "grips.json",
+        "positions.json",
+        "techniques.json",
+        "submission_techniques.json",
+    ]
 
     def test_get(self):
         response = self.client.get("/api/position/")
@@ -52,7 +62,7 @@ class TestPositions(TestCase):
                     "their_grips": [],
                     "aspect": "Playing Guard",
                     "techniques": [],
-                    "submissions": [],
+                    "submissions": ["Ude Gatame"],
                 },
             ],
         )
