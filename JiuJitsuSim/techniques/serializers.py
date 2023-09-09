@@ -19,6 +19,7 @@ class PositionSerializer(serializers.ModelSerializer):
 
 
 class PositionTechniquesSerializer(serializers.ModelSerializer):
+    display_name = serializers.SerializerMethodField()
     your_grips = serializers.SerializerMethodField()
     their_grips = serializers.SerializerMethodField()
     techniques = serializers.SerializerMethodField()
@@ -26,7 +27,10 @@ class PositionTechniquesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Position
-        fields = ["name", "your_grips", "their_grips", "aspect", "techniques", "submissions"]
+        fields = ["name", "display_name", "your_grips", "their_grips", "aspect", "techniques", "submissions"]
+
+    def get_display_name(self, obj):
+        return str(obj)
 
     def get_your_grips(self, obj):
         return [grip.name for grip in obj.your_grips.all()]

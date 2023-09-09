@@ -21,13 +21,13 @@ class TestRandomTechnique(TestCase):
                     "name": "Closed Guard",
                     "your_grips": ["Pinch Headlock"],
                     "their_grips": [],
-                    "aspect": "Playing Guard",
+                    "aspect": "Playing",
                 },
                 "to_position": {
                     "name": "Closed Guard",
                     "your_grips": ["Shoulder Crunch"],
                     "their_grips": [],
-                    "aspect": "Playing Guard",
+                    "aspect": "Playing",
                 },
             },
         )
@@ -50,17 +50,19 @@ class TestPositions(TestCase):
             [
                 {
                     "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Pinch Headlock)",
                     "your_grips": ["Pinch Headlock"],
                     "their_grips": [],
-                    "aspect": "Playing Guard",
+                    "aspect": "Playing",
                     "techniques": ["Move to Shoulder Crunch"],
                     "submissions": [],
                 },
                 {
                     "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Shoulder Crunch)",
                     "your_grips": ["Shoulder Crunch"],
                     "their_grips": [],
-                    "aspect": "Playing Guard",
+                    "aspect": "Playing",
                     "techniques": [],
                     "submissions": ["Ude Gatame"],
                 },

@@ -6,7 +6,7 @@
             "name": "Closed Guard",
             "your_grips": [1],
             "their_grips": [],
-            "aspect": "Playing Guard"
+            "aspect": "Playing"
         }
     },
     {
@@ -16,7 +16,7 @@
             "name": "Closed Guard",
             "your_grips": [2],
             "their_grips": [],
-            "aspect": "Playing Guard"
+            "aspect": "Playing"
         }
     }
 ]
