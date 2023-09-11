@@ -21,14 +21,17 @@ class TestRandomTechnique(TestCase):
         self.assertDictEqual(
             response.json(),
             {
+                "id": 1,
                 "name": "Move to Shoulder Crunch",
                 "from_position": {
+                    "id": 1,
                     "name": "Closed Guard",
                     "your_grips": ["Pinch Headlock"],
                     "their_grips": [],
                     "aspect": "Playing",
                 },
                 "to_position": {
+                    "id": 2,
                     "name": "Closed Guard",
                     "your_grips": ["Shoulder Crunch"],
                     "their_grips": [],
@@ -49,11 +52,14 @@ class TestPositions(TestCase):
     def test_get(self):
         response = self.client.get("/api/position/")
 
+        self.maxDiff = 1000000
+
         self.assertEqual(response.status_code, 200)
         self.assertListEqual(
             response.json(),
             [
                 {
+                    "id": 1,
                     "name": "Closed Guard",
                     "display_name": "Playing Closed Guard (Pinch Headlock)",
                     "your_grips": ["Pinch Headlock"],
@@ -63,6 +69,7 @@ class TestPositions(TestCase):
                     "submissions": [],
                 },
                 {
+                    "id": 2,
                     "name": "Closed Guard",
                     "display_name": "Playing Closed Guard (Shoulder Crunch)",
                     "your_grips": ["Shoulder Crunch"],

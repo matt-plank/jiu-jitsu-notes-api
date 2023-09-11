@@ -80,7 +80,7 @@ class Technique(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.name} from {self.from_position}"
+        return self.name
 
 
 class SubmissionTechnique(models.Model):
@@ -100,4 +100,4 @@ class SubmissionTechnique(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.name} from {self.from_position}"
+        return self.name
