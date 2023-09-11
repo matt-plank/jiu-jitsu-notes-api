@@ -3,6 +3,8 @@ from typing import Any
 from django.test import TestCase
 from rest_framework.test import APIClient
 
+from .. import models
+
 
 class TestRandomTechnique(TestCase):
     fixtures = [
@@ -135,3 +137,15 @@ class TestGrip(TestCase):
                 "name": "MY TEST GRIP",
             },
         )
+
+    def test_delete(self):
+        client = APIClient()
+        response: Any = client.delete(
+            "/api/grips/",
+            data={
+                "id": 1,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(models.Grip.objects.count(), 1)

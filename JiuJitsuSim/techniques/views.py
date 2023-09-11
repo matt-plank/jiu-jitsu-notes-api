@@ -64,3 +64,10 @@ class GripView(APIView):
         result = serializers.GripSerializer(grip).data
 
         return Response(result, status=201)
+
+    def delete(self, request):
+        id = request.data["id"]
+
+        db.delete_grip(id)
+
+        return Response(status=200)

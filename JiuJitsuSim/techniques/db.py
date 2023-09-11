@@ -40,3 +40,12 @@ def find_grip(id: int) -> Grip:
         raise ValueError(f"No grip found with id {id!r}")
 
     return grip
+
+
+def delete_grip(id: int):
+    grip = Grip.objects.filter(id=id).first()
+
+    if grip is None:
+        raise ValueError(f"No grip found with id {id!r}")
+
+    grip.delete()
