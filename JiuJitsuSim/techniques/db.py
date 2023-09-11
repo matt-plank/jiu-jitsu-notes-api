@@ -1,6 +1,6 @@
 import random
 
-from .models import Position, SubmissionTechnique, Technique
+from .models import Grip, Position, SubmissionTechnique, Technique
 
 
 def random_technique() -> Technique:
@@ -25,3 +25,9 @@ def all_positions():
     """Retrieve all positions from the database."""
     positions = Position.objects.all()
     return positions
+
+
+def all_grips():
+    """Retrieve all grips from the database."""
+    grips = Grip.objects.all()
+    return grips

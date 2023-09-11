@@ -68,3 +68,30 @@ class TestPositions(TestCase):
                 },
             ],
         )
+
+
+class TestGrip(TestCase):
+    fixtures = [
+        "grips.json",
+        "positions.json",
+        "techniques.json",
+        "submission_techniques.json",
+    ]
+
+    def test_get(self):
+        response = self.client.get("/api/grips/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertListEqual(
+            response.json(),
+            [
+                {
+                    "id": 1,
+                    "name": "Pinch Headlock",
+                },
+                {
+                    "id": 2,
+                    "name": "Shoulder Crunch",
+                },
+            ],
+        )

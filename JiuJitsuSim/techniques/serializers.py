@@ -60,3 +60,9 @@ class SubmissionTechniqueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.SubmissionTechnique
         fields = ["name", "from_position"]
+
+
+class GripSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Grip
+        fields = ["id", "name"]

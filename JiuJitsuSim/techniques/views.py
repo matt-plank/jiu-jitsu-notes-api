@@ -33,3 +33,13 @@ class PositionsView(APIView):
         result = serializers.PositionTechniquesSerializer(positions, many=True).data
 
         return Response(result)
+
+
+class GripView(APIView):
+    """View for interacting with the grip model."""
+
+    def get(self, request):
+        grips = db.all_grips()
+        result = serializers.GripSerializer(grips, many=True).data
+
+        return Response(result)
