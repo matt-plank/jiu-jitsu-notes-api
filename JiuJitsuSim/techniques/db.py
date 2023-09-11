@@ -31,3 +31,12 @@ def all_grips():
     """Retrieve all grips from the database."""
     grips = Grip.objects.all()
     return grips
+
+
+def find_grip(id: int) -> Grip:
+    grip = Grip.objects.filter(id=id).first()
+
+    if grip is None:
+        raise ValueError(f"No grip found with id {id!r}")
+
+    return grip

@@ -1,4 +1,7 @@
+from typing import Any
+
 from django.test import TestCase
+from rest_framework.test import APIClient
 
 
 class TestRandomTechnique(TestCase):
@@ -94,4 +97,23 @@ class TestGrip(TestCase):
                     "name": "Shoulder Crunch",
                 },
             ],
+        )
+
+    def test_put(self):
+        client = APIClient()
+        response: Any = client.put(
+            "/api/grips/",
+            data={
+                "id": 1,
+                "name": "TEST GRIP",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertDictEqual(
+            response.json(),
+            {
+                "id": 1,
+                "name": "TEST GRIP",
+            },
         )

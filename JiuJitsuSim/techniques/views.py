@@ -43,3 +43,14 @@ class GripView(APIView):
         result = serializers.GripSerializer(grips, many=True).data
 
         return Response(result)
+
+    def put(self, request):
+        id = request.data["id"]
+        grip = db.find_grip(id)
+
+        grip.name = request.data["name"]
+        grip.save()
+
+        result = serializers.GripSerializer(grip).data
+
+        return Response(result)
