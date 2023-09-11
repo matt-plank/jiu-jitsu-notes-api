@@ -117,3 +117,21 @@ class TestGrip(TestCase):
                 "name": "TEST GRIP",
             },
         )
+
+    def test_post(self):
+        client = APIClient()
+        response: Any = client.post(
+            "/api/grips/",
+            data={
+                "name": "MY TEST GRIP",
+            },
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(
+            response.json(),
+            {
+                "id": 3,
+                "name": "MY TEST GRIP",
+            },
+        )

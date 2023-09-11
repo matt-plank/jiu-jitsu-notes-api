@@ -54,3 +54,13 @@ class GripView(APIView):
         result = serializers.GripSerializer(grip).data
 
         return Response(result)
+
+    def post(self, request):
+        name = request.data["name"]
+
+        grip = models.Grip(name=name)
+        grip.save()
+
+        result = serializers.GripSerializer(grip).data
+
+        return Response(result, status=201)
