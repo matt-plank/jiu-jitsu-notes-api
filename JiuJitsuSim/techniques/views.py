@@ -43,6 +43,22 @@ class PositionsView(APIView):
         if "name" in request.data:
             position.name = request.data["name"]
 
+        if "your_grips" in request.data:
+            position.your_grips.clear()
+
+            your_grips: dict = dict(request.data)["your_grips"]
+
+            for grip in your_grips:
+                position.your_grips.add(db.find_grip_from_name(grip))
+
+        if "their_grips" in request.data:
+            position.their_grips.clear()
+
+            their_grips: dict = dict(request.data)["their_grips"]
+
+            for grip in their_grips:
+                position.their_grips.add(db.find_grip_from_name(grip))
+
         position.save()
 
         result = serializers.PositionTechniquesSerializer(position).data

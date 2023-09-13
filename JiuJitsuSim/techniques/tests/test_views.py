@@ -89,6 +89,9 @@ class TestPositions(TestCase):
             data={
                 "id": 1,
                 "name": "New Position Name",
+                "their_grips": [
+                    "Pinch Headlock",
+                ],
             },
         )
 
@@ -98,9 +101,9 @@ class TestPositions(TestCase):
             {
                 "id": 1,
                 "name": "New Position Name",
-                "display_name": "Playing New Position Name (Pinch Headlock)",
+                "display_name": "Playing New Position Name (Pinch Headlock) vs (Pinch Headlock)",
                 "your_grips": ["Pinch Headlock"],
-                "their_grips": [],
+                "their_grips": ["Pinch Headlock"],
                 "aspect": "Playing",
                 "techniques": ["Move to Shoulder Crunch"],
                 "submissions": [],

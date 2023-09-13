@@ -58,3 +58,12 @@ def find_position(id: int) -> Position:
         raise ValueError(f"No position found with id {id!r}")
 
     return position
+
+
+def find_grip_from_name(name: str) -> Grip:
+    grip = Grip.objects.filter(name=name).first()
+
+    if grip is None:
+        raise ValueError(f"No grip found with name {name!r}")
+
+    return grip
