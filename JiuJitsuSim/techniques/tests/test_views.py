@@ -81,6 +81,32 @@ class TestPositions(TestCase):
             ],
         )
 
+    def test_put(self):
+        client = APIClient()
+
+        response: Any = client.put(
+            "/api/position/",
+            data={
+                "id": 1,
+                "name": "New Position Name",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertDictEqual(
+            response.json(),
+            {
+                "id": 1,
+                "name": "New Position Name",
+                "display_name": "Playing New Position Name (Pinch Headlock)",
+                "your_grips": ["Pinch Headlock"],
+                "their_grips": [],
+                "aspect": "Playing",
+                "techniques": ["Move to Shoulder Crunch"],
+                "submissions": [],
+            },
+        )
+
 
 class TestGrip(TestCase):
     fixtures = [

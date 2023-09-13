@@ -34,6 +34,21 @@ class PositionsView(APIView):
 
         return Response(result)
 
+    def put(self, request):
+        position = db.find_position(id=request.data["id"])
+
+        if "aspect" in request.data:
+            position.aspect = request.data["aspect"]
+
+        if "name" in request.data:
+            position.name = request.data["name"]
+
+        position.save()
+
+        result = serializers.PositionTechniquesSerializer(position).data
+
+        return Response(result)
+
 
 class GripView(APIView):
     """View for interacting with the grip model."""

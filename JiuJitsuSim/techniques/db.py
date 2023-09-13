@@ -49,3 +49,12 @@ def delete_grip(id: int):
         raise ValueError(f"No grip found with id {id!r}")
 
     grip.delete()
+
+
+def find_position(id: int) -> Position:
+    position = Position.objects.filter(id=id).first()
+
+    if position is None:
+        raise ValueError(f"No position found with id {id!r}")
+
+    return position
