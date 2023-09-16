@@ -1,6 +1,9 @@
 from rest_framework.views import APIView, Response
 
-from . import db, models, serializers
+from . import db, models
+from .serializers import grip as grip_serializers
+from .serializers import position as position_serializers
+from .serializers import submission, technique
 
 
 class RandomTechniqueView(APIView):
@@ -9,7 +12,7 @@ class RandomTechniqueView(APIView):
     def get(self, request):
         random_technique: models.Technique = db.random_technique()
 
-        result = serializers.TechniqueSerializer(random_technique).data
+        result = technique.CompleteSerializer(random_technique).data
 
         return Response(result)
 
@@ -20,7 +23,7 @@ class RandomSubmissionView(APIView):
     def get(self, request):
         random_submission: models.SubmissionTechnique = db.random_submission()
 
-        result = serializers.SubmissionTechniqueSerializer(random_submission).data
+        result = submission.CompleteSerializer(random_submission).data
 
         return Response(result)
 
@@ -30,7 +33,7 @@ class PositionsView(APIView):
 
     def get(self, request):
         positions = db.all_positions()
-        result = serializers.PositionTechniquesSerializer(positions, many=True).data
+        result = position_serializers.CompleteSerializer(positions, many=True).data
 
         return Response(result)
 
@@ -61,7 +64,7 @@ class PositionsView(APIView):
 
         position.save()
 
-        result = serializers.PositionTechniquesSerializer(position).data
+        result = position_serializers.CompleteSerializer(position).data
 
         return Response(result)
 
@@ -71,7 +74,7 @@ class GripView(APIView):
 
     def get(self, request):
         grips = db.all_grips()
-        result = serializers.GripSerializer(grips, many=True).data
+        result = grip_serializers.CompleteSerializer(grips, many=True).data
 
         return Response(result)
 
@@ -82,7 +85,7 @@ class GripView(APIView):
         grip.name = request.data["name"]
         grip.save()
 
-        result = serializers.GripSerializer(grip).data
+        result = grip_serializers.CompleteSerializer(grip).data
 
         return Response(result)
 
@@ -92,7 +95,7 @@ class GripView(APIView):
         grip = models.Grip(name=name)
         grip.save()
 
-        result = serializers.GripSerializer(grip).data
+        result = grip_serializers.CompleteSerializer(grip).data
 
         return Response(result, status=201)
 

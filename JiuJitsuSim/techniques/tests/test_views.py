@@ -15,6 +15,8 @@ class TestRandomTechnique(TestCase):
     ]
 
     def test_get(self):
+        self.maxDiff = 1000000
+
         response = self.client.get("/api/technique/random/")
 
         self.assertEqual(response.status_code, 200)
@@ -23,19 +25,32 @@ class TestRandomTechnique(TestCase):
             {
                 "id": 1,
                 "name": "Move to Shoulder Crunch",
+                "notes": "",
                 "from_position": {
                     "id": 1,
-                    "name": "Closed Guard",
-                    "your_grips": ["Pinch Headlock"],
-                    "their_grips": [],
                     "aspect": "Playing",
+                    "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Pinch Headlock)",
+                    "your_grips": [
+                        {
+                            "id": 1,
+                            "name": "Pinch Headlock",
+                        }
+                    ],
+                    "their_grips": [],
                 },
                 "to_position": {
                     "id": 2,
-                    "name": "Closed Guard",
-                    "your_grips": ["Shoulder Crunch"],
-                    "their_grips": [],
                     "aspect": "Playing",
+                    "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                    "your_grips": [
+                        {
+                            "id": 2,
+                            "name": "Shoulder Crunch",
+                        }
+                    ],
+                    "their_grips": [],
                 },
             },
         )
@@ -60,28 +75,63 @@ class TestPositions(TestCase):
             [
                 {
                     "id": 1,
+                    "aspect": "Playing",
                     "name": "Closed Guard",
                     "display_name": "Playing Closed Guard (Pinch Headlock)",
-                    "your_grips": ["Pinch Headlock"],
+                    "your_grips": [
+                        {
+                            "id": 1,
+                            "name": "Pinch Headlock",
+                        }
+                    ],
                     "their_grips": [],
-                    "aspect": "Playing",
-                    "techniques": ["Move to Shoulder Crunch"],
+                    "techniques": [
+                        {
+                            "id": 1,
+                            "name": "Move to Shoulder Crunch",
+                            "to_position": {
+                                "id": 2,
+                                "aspect": "Playing",
+                                "name": "Closed Guard",
+                                "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                                "your_grips": [
+                                    {
+                                        "id": 2,
+                                        "name": "Shoulder Crunch",
+                                    },
+                                ],
+                                "their_grips": [],
+                            },
+                        }
+                    ],
                     "submissions": [],
                 },
                 {
                     "id": 2,
+                    "aspect": "Playing",
                     "name": "Closed Guard",
                     "display_name": "Playing Closed Guard (Shoulder Crunch)",
-                    "your_grips": ["Shoulder Crunch"],
+                    "your_grips": [
+                        {
+                            "id": 2,
+                            "name": "Shoulder Crunch",
+                        }
+                    ],
                     "their_grips": [],
-                    "aspect": "Playing",
                     "techniques": [],
-                    "submissions": ["Ude Gatame"],
+                    "submissions": [
+                        {
+                            "id": 1,
+                            "name": "Ude Gatame",
+                        }
+                    ],
                 },
             ],
         )
 
     def test_put(self):
+        self.maxDiff = 1000000
+
         client = APIClient()
 
         response: Any = client.put(
@@ -100,12 +150,40 @@ class TestPositions(TestCase):
             response.json(),
             {
                 "id": 1,
+                "aspect": "Playing",
                 "name": "New Position Name",
                 "display_name": "Playing New Position Name (Pinch Headlock) vs (Pinch Headlock)",
-                "your_grips": ["Pinch Headlock"],
-                "their_grips": ["Pinch Headlock"],
-                "aspect": "Playing",
-                "techniques": ["Move to Shoulder Crunch"],
+                "your_grips": [
+                    {
+                        "id": 1,
+                        "name": "Pinch Headlock",
+                    }
+                ],
+                "their_grips": [
+                    {
+                        "id": 1,
+                        "name": "Pinch Headlock",
+                    }
+                ],
+                "techniques": [
+                    {
+                        "id": 1,
+                        "name": "Move to Shoulder Crunch",
+                        "to_position": {
+                            "id": 2,
+                            "aspect": "Playing",
+                            "name": "Closed Guard",
+                            "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                            "your_grips": [
+                                {
+                                    "id": 2,
+                                    "name": "Shoulder Crunch",
+                                }
+                            ],
+                            "their_grips": [],
+                        },
+                    }
+                ],
                 "submissions": [],
             },
         )
