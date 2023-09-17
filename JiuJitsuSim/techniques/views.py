@@ -49,18 +49,20 @@ class PositionsView(APIView):
         if "your_grips" in request.data:
             position.your_grips.clear()
 
-            your_grips: dict = dict(request.data)["your_grips"]
+            your_grips: list[dict] = request.data["your_grips"]
 
             for grip in your_grips:
-                position.your_grips.add(db.find_grip_from_name(grip))
+                grip_id: int = grip["id"]
+                position.your_grips.add(db.find_grip(grip_id))
 
         if "their_grips" in request.data:
             position.their_grips.clear()
 
-            their_grips: dict = dict(request.data)["their_grips"]
+            their_grips: list[dict] = request.data["their_grips"]
 
             for grip in their_grips:
-                position.their_grips.add(db.find_grip_from_name(grip))
+                grip_id: int = grip["id"]
+                position.their_grips.add(db.find_grip(grip_id))
 
         position.save()
 

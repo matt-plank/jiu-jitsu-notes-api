@@ -82,15 +82,18 @@ class TestPositions(TestCase):
 
         client = APIClient()
 
-        response: Any = client.put(
+        response: Any = self.client.put(
             "/api/position/",
             data={
                 "id": 1,
                 "name": "New Position Name",
                 "their_grips": [
-                    "Pinch Headlock",
+                    {
+                        "id": 1,
+                    }
                 ],
             },
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 200)
