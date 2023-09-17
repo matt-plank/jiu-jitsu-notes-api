@@ -32,3 +32,14 @@ class TechniqueView(APIView):
         result = technique.CompleteSerializer(instance).data
 
         return Response(result)
+
+    def post(self, request):
+        instance: Technique = Technique.objects.create(
+            name=request.data["name"],
+            from_position=db.find_position(request.data["from_position"]["id"]),
+            to_position=db.find_position(request.data["to_position"]["id"]),
+        )
+
+        result = technique.CompleteSerializer(instance).data
+
+        return Response(result)

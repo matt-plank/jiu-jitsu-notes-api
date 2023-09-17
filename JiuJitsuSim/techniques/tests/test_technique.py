@@ -104,3 +104,54 @@ class TestTechnique(TestCase):
                 },
             },
         )
+
+    def test_post(self):
+        response = self.client.post(
+            "/api/technique/",
+            data={
+                "name": "New Technique Name",
+                "from_position": {
+                    "id": 1,
+                },
+                "to_position": {
+                    "id": 2,
+                },
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertDictEqual(
+            response.json(),
+            {
+                "id": 2,
+                "name": "New Technique Name",
+                "notes": "",
+                "from_position": {
+                    "id": 1,
+                    "aspect": "Playing",
+                    "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Pinch Headlock)",
+                    "your_grips": [
+                        {
+                            "id": 1,
+                            "name": "Pinch Headlock",
+                        }
+                    ],
+                    "their_grips": [],
+                },
+                "to_position": {
+                    "id": 2,
+                    "aspect": "Playing",
+                    "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                    "your_grips": [
+                        {
+                            "id": 2,
+                            "name": "Shoulder Crunch",
+                        }
+                    ],
+                    "their_grips": [],
+                },
+            },
+        )
