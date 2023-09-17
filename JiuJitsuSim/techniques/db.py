@@ -67,3 +67,12 @@ def find_grip_from_name(name: str) -> Grip:
         raise ValueError(f"No grip found with name {name!r}")
 
     return grip
+
+
+def find_technique(id: int) -> Technique:
+    technique = Technique.objects.filter(pk=id).first()
+
+    if technique is None:
+        raise ValueError(f"No technique found with id {id!r}")
+
+    return technique
