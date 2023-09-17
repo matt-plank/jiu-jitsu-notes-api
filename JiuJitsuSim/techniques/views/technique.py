@@ -43,3 +43,10 @@ class TechniqueView(APIView):
         result = technique.CompleteSerializer(instance).data
 
         return Response(result)
+
+    def delete(self, request):
+        instance: Technique = db.find_technique(request.data["id"])
+
+        instance.delete()
+
+        return Response(status=200)

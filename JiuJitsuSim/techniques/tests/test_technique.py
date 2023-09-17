@@ -1,5 +1,7 @@
 from django.test import TestCase
 
+from ..models import Technique
+
 
 class TestRandomTechnique(TestCase):
     fixtures = [
@@ -155,3 +157,15 @@ class TestTechnique(TestCase):
                 },
             },
         )
+
+    def test_delete(self):
+        response = self.client.delete(
+            "/api/technique/",
+            data={
+                "id": 1,
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Technique.objects.count(), 0)
