@@ -177,3 +177,43 @@ class TestPositions(TestCase):
                 "submissions": [],
             },
         )
+
+    def test_delete(self):
+        delete_response = self.client.delete(
+            "/api/position/",
+            data={
+                "id": 1,
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(delete_response.status_code, 200)
+
+        response = self.client.get("/api/position/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertListEqual(
+            response.json(),
+            [
+                {
+                    "id": 2,
+                    "aspect": "Playing",
+                    "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                    "your_grips": [
+                        {
+                            "id": 2,
+                            "name": "Shoulder Crunch",
+                        }
+                    ],
+                    "their_grips": [],
+                    "techniques": [],
+                    "submissions": [
+                        {
+                            "id": 1,
+                            "name": "Ude Gatame",
+                        }
+                    ],
+                },
+            ],
+        )

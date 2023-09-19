@@ -64,3 +64,10 @@ class PositionsView(APIView):
         result = position_serializers.CompleteSerializer(position).data
 
         return Response(result)
+
+    def delete(self, request):
+        position = db.find_position(id=request.data["id"])
+
+        position.delete()
+
+        return Response(status=200)
