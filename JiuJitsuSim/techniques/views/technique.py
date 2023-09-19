@@ -29,6 +29,8 @@ class TechniqueView(APIView):
         if "to_position" in request.data:
             instance.to_position = db.find_position(request.data["to_position"]["id"])
 
+        instance.save()
+
         result = technique.CompleteSerializer(instance).data
 
         return Response(result)
