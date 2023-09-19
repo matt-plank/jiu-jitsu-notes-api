@@ -1,6 +1,7 @@
 from rest_framework.views import APIView, Response
 
 from .. import db
+from ..models import Position
 from ..serializers import position as position_serializers
 
 
@@ -41,6 +42,24 @@ class PositionsView(APIView):
                 position.their_grips.add(db.find_grip(grip_id))
 
         position.save()
+
+        result = position_serializers.CompleteSerializer(position).data
+
+        return Response(result)
+
+    def post(self, request):
+        position = Position.objects.create(
+            name=request.data["name"],
+            aspect=request.data["aspect"],
+        )
+
+        for grip_data in request.data.get("your_grips", []):
+            grip = db.find_grip(grip_data["id"])
+            position.your_grips.add(grip)
+
+        for grip_data in request.data.get("their_grips", []):
+            grip = db.find_grip(grip_data["id"])
+            position.their_grips.add(grip)
 
         result = position_serializers.CompleteSerializer(position).data
 

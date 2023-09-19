@@ -138,3 +138,42 @@ class TestPositions(TestCase):
                 "submissions": [],
             },
         )
+
+    def test_post(self):
+        self.maxDiff = 1000000
+
+        response: Any = self.client.post(
+            "/api/position/",
+            data={
+                "id": 1,
+                "aspect": "Playing",
+                "name": "New Position Name",
+                "your_grips": [
+                    {
+                        "id": 1,
+                    }
+                ],
+                "their_grips": [],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertDictEqual(
+            response.json(),
+            {
+                "id": 3,
+                "aspect": "Playing",
+                "name": "New Position Name",
+                "display_name": "Playing New Position Name (Pinch Headlock)",
+                "your_grips": [
+                    {
+                        "id": 1,
+                        "name": "Pinch Headlock",
+                    },
+                ],
+                "their_grips": [],
+                "techniques": [],
+                "submissions": [],
+            },
+        )
