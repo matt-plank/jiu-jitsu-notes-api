@@ -1,7 +1,8 @@
 from typing import Any
 
 from django.test import TestCase
-from rest_framework.test import APIClient
+
+from .. import models
 
 
 class TestPositions(TestCase):
@@ -12,10 +13,10 @@ class TestPositions(TestCase):
         "submission_techniques.json",
     ]
 
+    maxDiff = 1000000
+
     def test_get(self):
         response = self.client.get("/api/position/")
-
-        self.maxDiff = 1000000
 
         self.assertEqual(response.status_code, 200)
         self.assertListEqual(
@@ -78,10 +79,6 @@ class TestPositions(TestCase):
         )
 
     def test_put(self):
-        self.maxDiff = 1000000
-
-        client = APIClient()
-
         response: Any = self.client.put(
             "/api/position/",
             data={
@@ -139,13 +136,42 @@ class TestPositions(TestCase):
             },
         )
 
-    def test_post(self):
-        self.maxDiff = 1000000
+    def test_put_no_id(self):
+        response = self.client.put(
+            "/api/position/",
+            data={
+                "name": "New Position Name",
+                "their_grips": [
+                    {
+                        "id": 1,
+                    }
+                ],
+            },
+            content_type="application/json",
+        )
 
+        self.assertEqual(response.status_code, 400)
+
+    def test_put_no_grip_id(self):
+        response = self.client.put(
+            "/api/position/",
+            data={
+                "name": "New Position Name",
+                "their_grips": [
+                    {
+                        "name": "Pinch Headlock",
+                    }
+                ],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_post(self):
         response: Any = self.client.post(
             "/api/position/",
             data={
-                "id": 1,
                 "aspect": "Playing",
                 "name": "New Position Name",
                 "your_grips": [
@@ -177,6 +203,61 @@ class TestPositions(TestCase):
                 "submissions": [],
             },
         )
+
+    def test_post_no_name(self):
+        response: Any = self.client.post(
+            "/api/position/",
+            data={
+                "aspect": "Playing",
+                "your_grips": [
+                    {
+                        "id": 1,
+                    }
+                ],
+                "their_grips": [],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(models.Position.objects.count(), 2)
+
+    def test_post_no_grip_id(self):
+        response = self.client.post(
+            "/api/position/",
+            data={
+                "aspect": "Playing",
+                "name": "New Position Name",
+                "your_grips": [
+                    {
+                        "name": "Pinch Headlock",
+                    }
+                ],
+                "their_grips": [],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(models.Position.objects.count(), 2)
+
+    def test_post_no_aspect(self):
+        response: Any = self.client.post(
+            "/api/position/",
+            data={
+                "name": "My New Position",
+                "your_grips": [
+                    {
+                        "id": 1,
+                    }
+                ],
+                "their_grips": [],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(models.Position.objects.count(), 2)
 
     def test_delete(self):
         delete_response = self.client.delete(
