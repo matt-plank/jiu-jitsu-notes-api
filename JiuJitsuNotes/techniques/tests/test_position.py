@@ -15,7 +15,48 @@ class TestPositions(TestCase):
 
     maxDiff = 1000000
 
-    def test_get(self):
+    def test_get_single(self):
+        response = self.client.get("/api/position/?id=1")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertDictEqual(
+            response.json(),
+            {
+                "id": 1,
+                "aspect": "Playing",
+                "name": "Closed Guard",
+                "display_name": "Playing Closed Guard (Pinch Headlock)",
+                "your_grips": [
+                    {
+                        "id": 1,
+                        "name": "Pinch Headlock",
+                    }
+                ],
+                "their_grips": [],
+                "techniques": [
+                    {
+                        "id": 1,
+                        "name": "Move to Shoulder Crunch",
+                        "to_position": {
+                            "id": 2,
+                            "aspect": "Playing",
+                            "name": "Closed Guard",
+                            "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                            "your_grips": [
+                                {
+                                    "id": 2,
+                                    "name": "Shoulder Crunch",
+                                },
+                            ],
+                            "their_grips": [],
+                        },
+                    }
+                ],
+                "submissions": [],
+            },
+        )
+
+    def test_get_many(self):
         response = self.client.get("/api/position/")
 
         self.assertEqual(response.status_code, 200)

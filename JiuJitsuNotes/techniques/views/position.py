@@ -1,4 +1,4 @@
-from rest_framework.views import APIView, Response
+from rest_framework.views import APIView, Request, Response
 
 from .. import db
 from ..models import Position
@@ -29,12 +29,26 @@ def update_grips_from_request(instance, request_data, grip_relation_name: str):
 class PositionsView(APIView):
     """Returns a list of all positions - and the techniques originating from each position."""
 
-    def get(self, request):
-        """Returns a serialized list of all positions."""
+    def get_single(self, request: Request):
+        """GET a single position."""
+        position = Position.objects.get(pk=request.query_params["id"])
+        result = position_serializers.CompleteSerializer(position).data
+
+        return Response(result)
+
+    def get_many(self, request: Request):
+        """GET all positions."""
         positions = db.all_positions()
         result = position_serializers.CompleteSerializer(positions, many=True).data
 
         return Response(result)
+
+    def get(self, request: Request):
+        """Handle GET request. Return either a single position or a list of positions depending on URL args."""
+        if "id" in request.query_params:
+            return self.get_single(request)
+
+        return self.get_many(request)
 
     def put(self, request):
         """Updates a given position with new details, returns the new serialized data for that position."""
