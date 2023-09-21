@@ -16,15 +16,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="position",
             name="their_grips",
-            field=models.ManyToManyField(
-                null=True, related_name="their_grips", to="techniques.grip"
-            ),
+            field=models.ManyToManyField(null=True, related_name="their_grips", to="techniques.grip"),
         ),
         migrations.AddField(
             model_name="position",
             name="your_grips",
-            field=models.ManyToManyField(
-                null=True, related_name="your_grips", to="techniques.grip"
-            ),
+            field=models.ManyToManyField(null=True, related_name="your_grips", to="techniques.grip"),
         ),
     ]

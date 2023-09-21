@@ -1,10 +1,10 @@
 [
-    {
-        "model": "techniques.SubmissionTechnique",
-        "pk": 1,
-        "fields": {
-            "name": "Ude Gatame",
-            "from_position": 2
-        }
-    }
+  {
+    "fields": {
+      "from_position": 2,
+      "name": "Ude Gatame"
+    },
+    "model": "techniques.SubmissionTechnique",
+    "pk": 1
+  }
 ]

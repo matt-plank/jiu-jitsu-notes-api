@@ -12,15 +12,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="position",
             name="their_grips",
-            field=models.ManyToManyField(
-                blank=True, related_name="their_grips", to="techniques.grip"
-            ),
+            field=models.ManyToManyField(blank=True, related_name="their_grips", to="techniques.grip"),
         ),
         migrations.AlterField(
             model_name="position",
             name="your_grips",
-            field=models.ManyToManyField(
-                blank=True, related_name="your_grips", to="techniques.grip"
-            ),
+            field=models.ManyToManyField(blank=True, related_name="your_grips", to="techniques.grip"),
         ),
     ]
