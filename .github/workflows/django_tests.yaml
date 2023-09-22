@@ -5,8 +5,6 @@ on:
     inputs:
       trigger:
         description: Trigger the workflow manually
-        required: true
-        default: manual
   push:
     branches:
     - main
