@@ -1,8 +1,14 @@
 name: Django Tests
 
 on:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: Trigger the workflow manually
+        required: true
+        default: manual
   push:
-    branchs:
+    branches:
     - main
 
 jobs:
