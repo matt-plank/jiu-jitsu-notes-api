@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Grip, Position, SubmissionTechnique, Technique, grip_names_list
+from .models import Grip, Playlist, Position, SubmissionTechnique, Technique, grip_names_list
 
 
 @admin.register(Position)
@@ -46,3 +46,4 @@ class SubmissionTechniqueAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Grip)
+admin.site.register(Playlist)
