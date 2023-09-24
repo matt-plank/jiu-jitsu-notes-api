@@ -1,0 +1,13 @@
+[
+  {
+    "fields": {
+      "description": "Shoulder crunch playlist",
+      "name": "Shoulder Crunch",
+      "positions": [
+        2
+      ]
+    },
+    "model": "techniques.playlist",
+    "pk": 1
+  }
+]

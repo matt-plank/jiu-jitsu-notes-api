@@ -101,3 +101,19 @@ class SubmissionTechnique(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Playlist(models.Model):
+    """Represents a "playlist", a simple way of organising positions."""
+
+    name = models.CharField(max_length=128)
+    description = models.TextField(blank=True)
+
+    positions = models.ManyToManyField(
+        Position,
+        related_name="playlists",
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.name

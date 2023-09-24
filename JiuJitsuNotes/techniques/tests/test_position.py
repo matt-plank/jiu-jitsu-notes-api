@@ -11,6 +11,7 @@ class TestPositions(TestCase):
         "positions.json",
         "techniques.json",
         "submission_techniques.json",
+        "playlists.json",
     ]
 
     maxDiff = 1000000
@@ -53,6 +54,7 @@ class TestPositions(TestCase):
                     }
                 ],
                 "submissions": [],
+                "playlists": [],
             },
         )
 
@@ -95,6 +97,7 @@ class TestPositions(TestCase):
                         }
                     ],
                     "submissions": [],
+                    "playlists": [],
                 },
                 {
                     "id": 2,
@@ -113,6 +116,13 @@ class TestPositions(TestCase):
                         {
                             "id": 1,
                             "name": "Ude Gatame",
+                        }
+                    ],
+                    "playlists": [
+                        {
+                            "id": 1,
+                            "name": "Shoulder Crunch",
+                            "description": "Shoulder crunch playlist",
                         }
                     ],
                 },
@@ -174,6 +184,7 @@ class TestPositions(TestCase):
                     }
                 ],
                 "submissions": [],
+                "playlists": [],
             },
         )
 
@@ -242,6 +253,7 @@ class TestPositions(TestCase):
                 "their_grips": [],
                 "techniques": [],
                 "submissions": [],
+                "playlists": [],
             },
         )
 
@@ -334,6 +346,13 @@ class TestPositions(TestCase):
                         {
                             "id": 1,
                             "name": "Ude Gatame",
+                        }
+                    ],
+                    "playlists": [
+                        {
+                            "id": 1,
+                            "name": "Shoulder Crunch",
+                            "description": "Shoulder crunch playlist",
                         }
                     ],
                 },
