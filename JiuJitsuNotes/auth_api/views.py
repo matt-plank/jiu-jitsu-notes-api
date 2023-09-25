@@ -36,6 +36,13 @@ class AccountView(APIView):
     """Represents the account resource."""
 
     @permission_classes([AllowAny])
+    def get(self, request):
+        """Return the currently authenticated user."""
+        result = UserSerializer(request.user).data
+
+        return Response(result, status=status.HTTP_200_OK)
+
+    @permission_classes([AllowAny])
     def post(self, request):
         """Create a new user account."""
         if "username" not in request.data:

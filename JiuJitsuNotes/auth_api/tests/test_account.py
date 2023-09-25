@@ -1,10 +1,27 @@
 from django.test import TestCase
 
+from .base_cases import AuthenticatingBaseTestCase
 
-class TestAccount(TestCase):
+
+class TestAccount(AuthenticatingBaseTestCase):
     fixtures = [
         "users.json",
     ]
+
+    def test_get(self):
+        response = self.client.get(
+            "/auth/account",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertDictEqual(
+            response.json(),
+            {
+                "id": 1,
+                "username": "testUser",
+            },
+        )
 
     def test_post_good_credentials(self):
         """Tests that a new user can be created with a POST request, and then logged in via token."""
