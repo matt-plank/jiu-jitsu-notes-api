@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
     "corsheaders",
     "techniques",
+    "auth_api",
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CORS Settings
 CORS_ALLOW_ALL_ORIGINS = True
+
+# REST Framework Settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}
