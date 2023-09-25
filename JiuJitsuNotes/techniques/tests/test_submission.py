@@ -1,14 +1,14 @@
-from django.test import TestCase
-
 from ..models import SubmissionTechnique
+from .base_cases import AuthenticatingBaseTestCase
 
 
-class TestPositions(TestCase):
+class TestSubmissions(AuthenticatingBaseTestCase):
     fixtures = [
         "grips.json",
         "positions.json",
         "techniques.json",
         "submission_techniques.json",
+        "users.json",
     ]
 
     maxDiff = 100000
@@ -21,6 +21,7 @@ class TestPositions(TestCase):
                 "name": "New Submission Name",
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -56,6 +57,7 @@ class TestPositions(TestCase):
                 },
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -88,6 +90,7 @@ class TestPositions(TestCase):
                 "id": 1,
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)

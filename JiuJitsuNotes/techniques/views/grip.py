@@ -1,3 +1,5 @@
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Response
 
 from .. import db, models
@@ -6,6 +8,8 @@ from ..serializers import grip as grip_serializers
 
 class GripView(APIView):
     """View for interacting with the grip model."""
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         grips = db.all_grips()

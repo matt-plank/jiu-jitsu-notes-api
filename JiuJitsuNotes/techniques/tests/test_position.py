@@ -1,23 +1,26 @@
 from typing import Any
 
-from django.test import TestCase
-
 from .. import models
+from .base_cases import AuthenticatingBaseTestCase
 
 
-class TestPositions(TestCase):
+class TestPositions(AuthenticatingBaseTestCase):
     fixtures = [
         "grips.json",
         "positions.json",
         "techniques.json",
         "submission_techniques.json",
         "playlists.json",
+        "users.json",
     ]
 
     maxDiff = 1000000
 
     def test_get_single(self):
-        response = self.client.get("/api/position/?id=1")
+        response = self.client.get(
+            "/api/position/?id=1",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertDictEqual(
@@ -59,7 +62,10 @@ class TestPositions(TestCase):
         )
 
     def test_get_many(self):
-        response = self.client.get("/api/position/")
+        response = self.client.get(
+            "/api/position/",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertListEqual(
@@ -142,6 +148,7 @@ class TestPositions(TestCase):
                 ],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -200,6 +207,7 @@ class TestPositions(TestCase):
                 ],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 400)
@@ -216,12 +224,13 @@ class TestPositions(TestCase):
                 ],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 400)
 
     def test_post(self):
-        response: Any = self.client.post(
+        response = self.client.post(
             "/api/position/",
             data={
                 "aspect": "Playing",
@@ -234,6 +243,7 @@ class TestPositions(TestCase):
                 "their_grips": [],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -258,7 +268,7 @@ class TestPositions(TestCase):
         )
 
     def test_post_no_name(self):
-        response: Any = self.client.post(
+        response = self.client.post(
             "/api/position/",
             data={
                 "aspect": "Playing",
@@ -270,6 +280,7 @@ class TestPositions(TestCase):
                 "their_grips": [],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 400)
@@ -289,6 +300,7 @@ class TestPositions(TestCase):
                 "their_grips": [],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 400)
@@ -307,6 +319,7 @@ class TestPositions(TestCase):
                 "their_grips": [],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 400)
@@ -319,11 +332,15 @@ class TestPositions(TestCase):
                 "id": 1,
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(delete_response.status_code, 200)
 
-        response = self.client.get("/api/position/")
+        response = self.client.get(
+            "/api/position/",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertListEqual(

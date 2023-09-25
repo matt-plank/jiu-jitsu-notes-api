@@ -1,21 +1,18 @@
-from typing import Any
-
-from django.test import TestCase
-from rest_framework.test import APIClient
-
 from .. import models
+from .base_cases import AuthenticatingBaseTestCase
 
 
-class TestGrip(TestCase):
+class TestGrip(AuthenticatingBaseTestCase):
     fixtures = [
         "grips.json",
         "positions.json",
         "techniques.json",
         "submission_techniques.json",
+        "users.json",
     ]
 
     def test_get(self):
-        response = self.client.get("/api/grips/")
+        response = self.client.get("/api/grips/", HTTP_AUTHORIZATION=self.authorization)
 
         self.assertEqual(response.status_code, 200)
         self.assertListEqual(
@@ -33,13 +30,14 @@ class TestGrip(TestCase):
         )
 
     def test_put(self):
-        client = APIClient()
-        response: Any = client.put(
+        response = self.client.put(
             "/api/grips/",
             data={
                 "id": 1,
                 "name": "TEST GRIP",
             },
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -52,12 +50,13 @@ class TestGrip(TestCase):
         )
 
     def test_post(self):
-        client = APIClient()
-        response: Any = client.post(
+        response = self.client.post(
             "/api/grips/",
             data={
                 "name": "MY TEST GRIP",
             },
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 201)
@@ -70,12 +69,13 @@ class TestGrip(TestCase):
         )
 
     def test_delete(self):
-        client = APIClient()
-        response: Any = client.delete(
+        response = self.client.delete(
             "/api/grips/",
             data={
                 "id": 1,
             },
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)

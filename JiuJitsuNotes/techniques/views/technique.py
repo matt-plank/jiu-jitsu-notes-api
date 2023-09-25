@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Response
 
 from .. import db
@@ -8,6 +9,8 @@ from ..serializers import technique
 class RandomTechniqueView(APIView):
     """Returns a random technique."""
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         random_technique: Technique = db.random_technique()
 
@@ -17,6 +20,8 @@ class RandomTechniqueView(APIView):
 
 
 class TechniqueView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def put(self, request):
         instance: Technique = db.find_technique(request.data["id"])
 

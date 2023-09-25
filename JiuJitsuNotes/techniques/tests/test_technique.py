@@ -1,20 +1,23 @@
-from django.test import TestCase
-
 from ..models import Technique
+from .base_cases import AuthenticatingBaseTestCase
 
 
-class TestRandomTechnique(TestCase):
+class TestRandomTechnique(AuthenticatingBaseTestCase):
     fixtures = [
         "grips.json",
         "positions.json",
         "techniques.json",
         "submission_techniques.json",
+        "users.json",
     ]
 
     def test_get(self):
         self.maxDiff = 1000000
 
-        response = self.client.get("/api/technique/random/")
+        response = self.client.get(
+            "/api/technique/random/",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertDictEqual(
@@ -53,12 +56,13 @@ class TestRandomTechnique(TestCase):
         )
 
 
-class TestTechnique(TestCase):
+class TestTechnique(AuthenticatingBaseTestCase):
     fixtures = [
         "grips.json",
         "positions.json",
         "techniques.json",
         "submission_techniques.json",
+        "users.json",
     ]
 
     def test_put(self):
@@ -69,6 +73,7 @@ class TestTechnique(TestCase):
                 "name": "New Technique Name",
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -120,6 +125,7 @@ class TestTechnique(TestCase):
                 },
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -165,6 +171,7 @@ class TestTechnique(TestCase):
                 "id": 1,
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)

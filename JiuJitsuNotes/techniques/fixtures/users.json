@@ -1,0 +1,16 @@
+[
+  {
+    "fields": {
+      "email": "example_email@test.com",
+      "first_name": "Testy",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_name": "McTestFace",
+      "password": "pbkdf2_sha256$600000$kK9bg7wnOy8ViJdugIGoal$sbs6KNoC1P61xvTC6Q31o/2u0CwfV9aj/r7lMzwm8kk=",
+      "username": "testUser"
+    },
+    "model": "auth.user",
+    "pk": 1
+  }
+]

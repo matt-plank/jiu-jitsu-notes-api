@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Response
 
 from ..models import Playlist, Position
@@ -6,6 +7,8 @@ from ..serializers import playlist as playlist_serializers
 
 class PlaylistView(APIView):
     """View for interacting with the grip model."""
+
+    permission_classes = [IsAuthenticated]
 
     def get_single(self, request):
         """GET a single playlist."""

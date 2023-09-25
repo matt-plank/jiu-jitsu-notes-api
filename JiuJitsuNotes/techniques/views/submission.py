@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Response
 
 from .. import db
@@ -8,6 +9,8 @@ from ..serializers import submission
 class RandomSubmissionView(APIView):
     """Returns a random submission."""
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         random_submission: SubmissionTechnique = db.random_submission()
 
@@ -17,6 +20,8 @@ class RandomSubmissionView(APIView):
 
 
 class SubmissionView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def put(self, request):
         instance: SubmissionTechnique = SubmissionTechnique.objects.get(pk=request.data["id"])
 

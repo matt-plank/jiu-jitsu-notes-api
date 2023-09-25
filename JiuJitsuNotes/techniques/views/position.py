@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Request, Response
 
 from .. import db
@@ -28,6 +29,8 @@ def update_grips_from_request(instance, request_data, grip_relation_name: str):
 
 class PositionsView(APIView):
     """Returns a list of all positions - and the techniques originating from each position."""
+
+    permission_classes = [IsAuthenticated]
 
     def get_single(self, request: Request):
         """GET a single position."""

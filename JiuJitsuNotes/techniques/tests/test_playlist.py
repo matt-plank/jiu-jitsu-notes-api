@@ -1,21 +1,24 @@
-from django.test import TestCase
-
 from ..models import Playlist
+from .base_cases import AuthenticatingBaseTestCase
 
 
-class TestPlaylist(TestCase):
+class TestPlaylist(AuthenticatingBaseTestCase):
     fixtures = [
         "grips.json",
         "positions.json",
         "techniques.json",
         "submission_techniques.json",
         "playlists.json",
+        "users.json",
     ]
 
     maxDiff = None
 
     def test_get_many(self):
-        response = self.client.get("/api/playlists/")
+        response = self.client.get(
+            "/api/playlists/",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertListEqual(
@@ -45,7 +48,10 @@ class TestPlaylist(TestCase):
         )
 
     def test_get_single(self):
-        response = self.client.get("/api/playlists/?id=1")
+        response = self.client.get(
+            "/api/playlists/?id=1",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertDictEqual(
@@ -80,6 +86,7 @@ class TestPlaylist(TestCase):
                 "name": "Shoulder Crunchy",
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -120,6 +127,7 @@ class TestPlaylist(TestCase):
                 ],
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
@@ -154,6 +162,7 @@ class TestPlaylist(TestCase):
                 "id": 1,
             },
             content_type="application/json",
+            HTTP_AUTHORIZATION=self.authorization,
         )
 
         self.assertEqual(response.status_code, 200)
