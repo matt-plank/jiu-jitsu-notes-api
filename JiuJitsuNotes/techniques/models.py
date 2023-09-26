@@ -1,5 +1,4 @@
-from typing import Any
-
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -26,6 +25,12 @@ def grips_versus(first_grips: str, last_grips: str) -> str:
 class Grip(models.Model):
     """Represents a "grip" jiu-jitsu concept."""
 
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="grips",
+    )
+
     name = models.CharField(max_length=128)
 
     def __str__(self):
@@ -48,6 +53,12 @@ class PositionDetail(models.TextChoices):
 class Position(models.Model):
     """Represents a "position" jiu-jitsu concept. Behaves as a node on a directed graph."""
 
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="positions",
+    )
+
     name = models.CharField(max_length=128)
     your_grips = models.ManyToManyField(Grip, related_name="your_grips", blank=True)
     their_grips = models.ManyToManyField(Grip, related_name="their_grips", blank=True)
@@ -62,6 +73,12 @@ class Position(models.Model):
 
 class Technique(models.Model):
     """Represents a "technique" jiu-jitsu concept. Behaves as an edge on a directed graph."""
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="techniques",
+    )
 
     name = models.CharField(max_length=128)
 
@@ -89,6 +106,12 @@ class SubmissionTechnique(models.Model):
     Behaves as an edge on the directed graph, between a position and a conceptual "submission"
     position, which is not implemented but implied."""
 
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="submissions",
+    )
+
     name = models.CharField(max_length=128)
 
     from_position = models.ForeignKey(
@@ -105,6 +128,12 @@ class SubmissionTechnique(models.Model):
 
 class Playlist(models.Model):
     """Represents a "playlist", a simple way of organising positions."""
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="playlists",
+    )
 
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)

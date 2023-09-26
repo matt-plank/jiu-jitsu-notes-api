@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Request, Response
 
@@ -14,7 +15,7 @@ def update_property_from_request(instance, request_data, property: str):
     setattr(instance, property, request_data[property])
 
 
-def update_grips_from_request(instance, request_data, grip_relation_name: str):
+def update_grips_from_request(user: User, instance, request_data, grip_relation_name: str):
     """Copies a list of grips into a position."""
     if grip_relation_name not in request_data:
         return
@@ -24,7 +25,7 @@ def update_grips_from_request(instance, request_data, grip_relation_name: str):
 
     for grip in request_data[grip_relation_name]:
         grip_id: int = grip["id"]
-        instance_grips.add(db.find_grip(grip_id))
+        instance_grips.add(db.grip.find_by_id(user, grip_id))
 
 
 class PositionsView(APIView):
@@ -34,14 +35,14 @@ class PositionsView(APIView):
 
     def get_single(self, request: Request):
         """GET a single position."""
-        position = Position.objects.get(pk=request.query_params["id"])
+        position = db.position.find_by_id(request.user, int(request.query_params["id"]))
         result = position_serializers.CompleteSerializer(position).data
 
         return Response(result)
 
     def get_many(self, request: Request):
         """GET all positions."""
-        positions = db.all_positions()
+        positions = db.position.all(request.user)
         result = position_serializers.CompleteSerializer(positions, many=True).data
 
         return Response(result)
@@ -62,12 +63,12 @@ class PositionsView(APIView):
             if "id" not in grip:
                 return Response("Grip ID required", status=400)
 
-        position = db.find_position(id=request.data["id"])
+        position = db.position.find_by_id(request.user, id=request.data["id"])
 
         update_property_from_request(position, request.data, "aspect")
         update_property_from_request(position, request.data, "name")
-        update_grips_from_request(position, request.data, "your_grips")
-        update_grips_from_request(position, request.data, "their_grips")
+        update_grips_from_request(request.user, position, request.data, "your_grips")
+        update_grips_from_request(request.user, position, request.data, "their_grips")
 
         position.save()
 
@@ -91,13 +92,14 @@ class PositionsView(APIView):
             if "id" not in grip:
                 return Response("Grip ID requred", status=400)
 
-        position = Position.objects.create(
-            name=request.data["name"],
-            aspect=request.data["aspect"],
+        position = db.position.create(
+            request.user,
+            request.data["name"],
+            request.data["aspect"],
         )
 
-        update_grips_from_request(position, request.data, "your_grips")
-        update_grips_from_request(position, request.data, "their_grips")
+        update_grips_from_request(request.user, position, request.data, "your_grips")
+        update_grips_from_request(request.user, position, request.data, "their_grips")
 
         result = position_serializers.CompleteSerializer(position).data
 
@@ -108,7 +110,7 @@ class PositionsView(APIView):
         if "id" not in request.data:
             return Response("ID required", status=400)
 
-        position = db.find_position(id=request.data["id"])
+        position = db.position.find_by_id(request.user, id=request.data["id"])
 
         position.delete()
 

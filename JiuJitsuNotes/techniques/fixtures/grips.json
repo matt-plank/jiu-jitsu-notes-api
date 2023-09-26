@@ -1,14 +1,16 @@
 [
   {
     "fields": {
-      "name": "Pinch Headlock"
+      "name": "Pinch Headlock",
+      "user": 1
     },
     "model": "techniques.grip",
     "pk": 1
   },
   {
     "fields": {
-      "name": "Shoulder Crunch"
+      "name": "Shoulder Crunch",
+      "user": 1
     },
     "model": "techniques.grip",
     "pk": 2

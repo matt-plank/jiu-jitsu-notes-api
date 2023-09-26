@@ -1,6 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Response
 
+from .. import db
 from ..models import Playlist, Position
 from ..serializers import playlist as playlist_serializers
 
@@ -13,7 +14,7 @@ class PlaylistView(APIView):
     def get_single(self, request):
         """GET a single playlist."""
         id: int = request.query_params["id"]
-        playlist: Playlist = Playlist.objects.get(pk=id)
+        playlist: Playlist = db.playlist.find_by_id(request.user, id)
 
         result = playlist_serializers.CompleteSerializer(playlist).data
 
@@ -21,7 +22,7 @@ class PlaylistView(APIView):
 
     def get_many(self, request):
         """GET all playlists."""
-        playlists = Playlist.objects.all()
+        playlists = db.playlist.all(request.user)
         result = playlist_serializers.CompleteSerializer(playlists, many=True).data
 
         return Response(result)
@@ -38,7 +39,7 @@ class PlaylistView(APIView):
         if "id" not in request.data:
             return Response({"error": "id not provided"}, status=400)
 
-        playlist: Playlist = Playlist.objects.get(pk=request.data["id"])
+        playlist: Playlist = db.playlist.find_by_id(request.user, request.data["id"])
 
         if "name" in request.data:
             playlist.name = request.data["name"]
@@ -50,7 +51,7 @@ class PlaylistView(APIView):
             playlist.positions.clear()
             for position_data in request.data["positions"]:
                 position_id: int = position_data["id"]
-                position: Position = Position.objects.get(pk=position_id)
+                position: Position = db.position.find_by_id(request.user, position_id)
                 playlist.positions.add(position)
 
         result = playlist_serializers.CompleteSerializer(playlist).data
@@ -65,14 +66,15 @@ class PlaylistView(APIView):
         if "description" not in request.data:
             return Response({"error": "description not provided"}, status=400)
 
-        playlist: Playlist = Playlist.objects.create(
-            name=request.data["name"],
-            description=request.data["description"],
+        playlist: Playlist = db.playlist.create(
+            request.user,
+            request.data["name"],
+            request.data["description"],
         )
 
         for position_data in request.data.get("positions", []):
             position_id: int = position_data["id"]
-            position: Position = Position.objects.get(pk=position_id)
+            position: Position = db.position.find_by_id(request.user, position_id)
             playlist.positions.add(position)
 
         result = playlist_serializers.CompleteSerializer(playlist).data
@@ -84,7 +86,7 @@ class PlaylistView(APIView):
         if "id" not in request.data:
             return Response({"error": "id not provided"}, status=400)
 
-        playlist: Playlist = Playlist.objects.get(pk=request.data["id"])
+        playlist: Playlist = db.playlist.find_by_id(request.user, request.data["id"])
         playlist.delete()
 
         return Response(status=200)

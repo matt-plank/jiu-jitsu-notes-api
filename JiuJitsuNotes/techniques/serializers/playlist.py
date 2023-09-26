@@ -26,4 +26,4 @@ class CompleteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Playlist
-        fields = "__all__"
+        exclude = ("user",)

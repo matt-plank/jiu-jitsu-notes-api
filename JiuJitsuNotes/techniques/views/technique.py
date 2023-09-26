@@ -12,8 +12,7 @@ class RandomTechniqueView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        random_technique: Technique = db.random_technique()
-
+        random_technique: Technique = db.technique.get_random(request.user)
         result = technique.CompleteSerializer(random_technique).data
 
         return Response(result)
@@ -23,16 +22,16 @@ class TechniqueView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
-        instance: Technique = db.find_technique(request.data["id"])
+        instance: Technique = db.technique.find_by_id(request.user, request.data["id"])
 
         if "name" in request.data:
             instance.name = request.data["name"]
 
         if "from_position" in request.data:
-            instance.from_position = db.find_position(request.data["from_position"]["id"])
+            instance.from_position = db.position.find_by_id(request.user, request.data["from_position"]["id"])
 
         if "to_position" in request.data:
-            instance.to_position = db.find_position(request.data["to_position"]["id"])
+            instance.to_position = db.position.find_by_id(request.user, request.data["to_position"]["id"])
 
         instance.save()
 
@@ -41,10 +40,14 @@ class TechniqueView(APIView):
         return Response(result)
 
     def post(self, request):
-        instance: Technique = Technique.objects.create(
-            name=request.data["name"],
-            from_position=db.find_position(request.data["from_position"]["id"]),
-            to_position=db.find_position(request.data["to_position"]["id"]),
+        from_position = db.position.find_by_id(request.user, request.data["from_position"]["id"])
+        to_position = db.position.find_by_id(request.user, request.data["to_position"]["id"])
+
+        instance: Technique = db.technique.create(
+            request.user,
+            request.data["name"],
+            from_position,
+            to_position,
         )
 
         result = technique.CompleteSerializer(instance).data
@@ -52,7 +55,7 @@ class TechniqueView(APIView):
         return Response(result)
 
     def delete(self, request):
-        instance: Technique = db.find_technique(request.data["id"])
+        instance: Technique = db.technique.find_by_id(request.user, request.data["id"])
 
         instance.delete()
 

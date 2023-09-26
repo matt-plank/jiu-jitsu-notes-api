@@ -4,6 +4,7 @@
       "aspect": "Playing",
       "name": "Closed Guard",
       "their_grips": [],
+      "user": 1,
       "your_grips": [
         1
       ]
@@ -16,6 +17,7 @@
       "aspect": "Playing",
       "name": "Closed Guard",
       "their_grips": [],
+      "user": 1,
       "your_grips": [
         2
       ]

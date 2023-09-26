@@ -6,4 +6,4 @@ from .. import models
 class CompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Grip
-        fields = "__all__"
+        exclude = ("user",)

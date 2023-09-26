@@ -12,7 +12,7 @@ class RandomSubmissionView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        random_submission: SubmissionTechnique = db.random_submission()
+        random_submission: SubmissionTechnique = db.submission.get_random(request.user)
 
         result = submission.CompleteSerializer(random_submission).data
 
@@ -23,13 +23,19 @@ class SubmissionView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
-        instance: SubmissionTechnique = SubmissionTechnique.objects.get(pk=request.data["id"])
+        instance: SubmissionTechnique = db.submission.find_by_id(
+            request.user,
+            request.data["id"],
+        )
 
         if "name" in request.data:
             instance.name = request.data["name"]
 
         if "from_position" in request.data:
-            instance.from_position = db.find_position(request.data["from_position"]["id"])
+            instance.from_position = db.position.find_by_id(
+                request.user,
+                request.data["from_position"]["id"],
+            )
 
         instance.save()
 
@@ -38,9 +44,15 @@ class SubmissionView(APIView):
         return Response(result)
 
     def post(self, request):
-        instance: SubmissionTechnique = SubmissionTechnique.objects.create(
-            name=request.data["name"],
-            from_position=db.find_position(request.data["from_position"]["id"]),
+        from_position = db.position.find_by_id(
+            request.user,
+            request.data["from_position"]["id"],
+        )
+
+        instance: SubmissionTechnique = db.submission.create(
+            request.user,
+            request.data["name"],
+            from_position,
         )
 
         result = submission.CompleteSerializer(instance).data
@@ -48,7 +60,10 @@ class SubmissionView(APIView):
         return Response(result)
 
     def delete(self, request):
-        instance: SubmissionTechnique = SubmissionTechnique.objects.get(pk=request.data["id"])
+        instance: SubmissionTechnique = db.submission.find_by_id(
+            request.user,
+            request.data["id"],
+        )
 
         instance.delete()
 

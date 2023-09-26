@@ -28,4 +28,4 @@ class CompleteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Technique
-        fields = "__all__"
+        exclude = ("user",)

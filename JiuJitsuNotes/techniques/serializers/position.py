@@ -20,4 +20,4 @@ class CompleteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Position
-        fields = "__all__"
+        exclude = ("user",)

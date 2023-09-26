@@ -2,7 +2,8 @@
   {
     "fields": {
       "from_position": 2,
-      "name": "Ude Gatame"
+      "name": "Ude Gatame",
+      "user": 1
     },
     "model": "techniques.SubmissionTechnique",
     "pk": 1

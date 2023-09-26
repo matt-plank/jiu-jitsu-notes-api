@@ -5,7 +5,8 @@
       "name": "Shoulder Crunch",
       "positions": [
         2
-      ]
+      ],
+      "user": 1
     },
     "model": "techniques.playlist",
     "pk": 1

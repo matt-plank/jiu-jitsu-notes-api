@@ -3,7 +3,8 @@
     "fields": {
       "from_position": 1,
       "name": "Move to Shoulder Crunch",
-      "to_position": 2
+      "to_position": 2,
+      "user": 1
     },
     "model": "techniques.technique",
     "pk": 1
