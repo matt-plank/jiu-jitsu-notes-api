@@ -17,17 +17,17 @@ Install dependencies
 $ python -m pip install -r requirements.txt
 ```
 
+Install pre-commit hooks (required for contribution but not personal use)
+
+```bash
+$ pre-commit install
+```
+
 Initialise database
 
 ```bash
 $ cd JiuJitsuNotes/
 $ python manage.py migrate
-```
-
-Install pre-commit hooks
-
-```bash
-$ pre-commit install
 ```
 
 ### Start the Server
