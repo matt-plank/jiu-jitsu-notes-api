@@ -6,34 +6,41 @@ The Django API for my Jiu Jitsu notes app - designed to simplify the process of 
 
 Clone and enter the repository
 
-```
+```bash
 $ git clone https://github.com/matt-plank/jiu-jitsu-notes-api.git
 $ cd jiu-jitsu-notes-api
 ```
 
 Install dependencies
 
-```
+```bash
 $ python -m pip install -r requirements.txt
+```
+
+Initialise database
+
+```bash
+$ cd JiuJitsuNotes/
+$ python manage.py migrate
 ```
 
 Install pre-commit hooks
 
-```
+```bash
 $ pre-commit install
 ```
 
 ### Start the Server
 
-```
-$ cd JiuJitsuNotes/
+```bash
+# In jiu-jitsu-notes-api/JiuJitsuNotes/
 $ python manage.py runserver
 ```
 
 ### Run Unit Tests
 
-```
-$ cd JiuJitsuNotes/
+```bash
+# In jiu-jitsu-notes-api/JiuJitsuNotes/
 $ python manage.py test
 ```
 
@@ -55,7 +62,7 @@ Destroying test database for alias 'default'...
 
 Useful for admin dashboard access
 
-```
-$ cd JiuJitsuNotes/
+```bash
+# In jiu-jitsu-notes-api/JiuJitsuNotes/
 $ python manage.py createsuperuser
 ```
