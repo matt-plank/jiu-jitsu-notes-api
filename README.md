@@ -1,5 +1,7 @@
 # jiu-jitsu-notes-api
 
+[![Django Tests](https://github.com/matt-plank/jiu-jitsu-notes-api/actions/workflows/django_tests.yaml/badge.svg)](https://github.com/matt-plank/jiu-jitsu-notes-api/actions/workflows/django_tests.yaml)
+
 The Django API for my Jiu Jitsu notes app - designed to simplify the process of conceptualising and memorising complex techniques and transitions in the sport of Jiu Jitsu.
 
 ## Setup
