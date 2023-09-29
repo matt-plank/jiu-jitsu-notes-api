@@ -7,9 +7,9 @@ def find_by_id(user: User, id: int) -> Position:
     return user.positions.get(pk=id)  # type: ignore
 
 
-def all(user: User):
+def all(user: User, order_by=None):
     """Retrieve all positions from the database."""
-    return user.positions.all()  # type: ignore
+    return user.positions.all().order_by(order_by) if order_by else user.positions.all()  # type: ignore
 
 
 def create(user: User, name: str, aspect: str) -> Position:

@@ -42,7 +42,7 @@ class PositionsView(APIView):
 
     def get_many(self, request: Request):
         """GET all positions."""
-        positions = db.position.all(request.user)
+        positions = db.position.all(request.user, order_by=request.query_params.get("order_by"))
         result = position_serializers.CompleteSerializer(positions, many=True).data
 
         return Response(result)

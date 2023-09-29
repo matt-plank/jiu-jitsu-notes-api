@@ -135,6 +135,80 @@ class TestPositions(AuthenticatingBaseTestCase):
             ],
         )
 
+    def test_get_many_order_by(self):
+        response = self.client.get(
+            "/api/position/?order_by=name",
+            HTTP_AUTHORIZATION=self.authorization,
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertListEqual(
+            response.json(),
+            [
+                {
+                    "id": 1,
+                    "aspect": "Playing",
+                    "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Pinch Headlock)",
+                    "your_grips": [
+                        {
+                            "id": 1,
+                            "name": "Pinch Headlock",
+                        }
+                    ],
+                    "their_grips": [],
+                    "techniques": [
+                        {
+                            "id": 1,
+                            "name": "Move to Shoulder Crunch",
+                            "to_position": {
+                                "id": 2,
+                                "aspect": "Playing",
+                                "name": "Closed Guard",
+                                "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                                "your_grips": [
+                                    {
+                                        "id": 2,
+                                        "name": "Shoulder Crunch",
+                                    },
+                                ],
+                                "their_grips": [],
+                            },
+                        }
+                    ],
+                    "submissions": [],
+                    "playlists": [],
+                },
+                {
+                    "id": 2,
+                    "aspect": "Playing",
+                    "name": "Closed Guard",
+                    "display_name": "Playing Closed Guard (Shoulder Crunch)",
+                    "your_grips": [
+                        {
+                            "id": 2,
+                            "name": "Shoulder Crunch",
+                        }
+                    ],
+                    "their_grips": [],
+                    "techniques": [],
+                    "submissions": [
+                        {
+                            "id": 1,
+                            "name": "Ude Gatame",
+                        }
+                    ],
+                    "playlists": [
+                        {
+                            "id": 1,
+                            "name": "Shoulder Crunch",
+                            "description": "Shoulder crunch playlist",
+                        }
+                    ],
+                },
+            ],
+        )
+
     def test_put(self):
         response: Any = self.client.put(
             "/api/position/",
