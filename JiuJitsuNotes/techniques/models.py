@@ -8,18 +8,18 @@ def grip_names_list(grips) -> str:
     return ", ".join(grip_names)
 
 
-def grips_versus(first_grips: str, last_grips: str) -> str:
+def grips_versus(your_grips: str, their_grips: str) -> str:
     """Conditionally formatted string for two comma-separated lists of grips."""
-    if first_grips == "" and last_grips == "":
+    if your_grips == "" and their_grips == "":
         return ""
 
-    if first_grips == "":
-        return f"({last_grips})"
+    if your_grips == "":
+        return f"vs ({their_grips})"
 
-    if last_grips == "":
-        return f"({first_grips})"
+    if their_grips == "":
+        return f"({your_grips})"
 
-    return f"({first_grips}) vs ({last_grips})"
+    return f"({your_grips}) vs ({their_grips})"
 
 
 class Grip(models.Model):
