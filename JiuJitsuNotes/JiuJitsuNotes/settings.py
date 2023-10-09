@@ -147,14 +147,15 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "console": {
+        "file": {
             "level": "INFO",
-            "class": "logging.StreamHandler",
+            "class": "logging.FileHandler",
+            "filename": "/var/log/django/debug.log",
         },
     },
     "loggers": {
         "django": {
-            "handlers": ["console"],
+            "handlers": ["file"],
             "level": "INFO",
         },
     },
