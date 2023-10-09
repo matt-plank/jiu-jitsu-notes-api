@@ -148,15 +148,15 @@ LOGGING = {
     "disable_existing_loggers": False,
     "handlers": {
         "file": {
-            "level": "INFO",
+            "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": "info.log",
+            "filename": "debug.log",
         },
     },
     "loggers": {
         "django": {
             "handlers": ["file"],
-            "level": "INFO",
+            "level": "DEBUG",
         },
     },
 }
